@@ -5,9 +5,9 @@ import { IDictionary } from '../types/collections';
 import { HttpError } from '../types/http';
 import { getToken } from './authorizationApi';
 
-const [getAsync, postAsync] = [request.get, request.post].map(util.promisify);
-
 const AUTH0_MGT_API = `https://${process.env.AUTH0_DOMAIN}/api/v2`;
+
+const [getAsync, postAsync] = [request.get, request.post].map(util.promisify);
 
 /**
  * Creates a new client application.
