@@ -6,6 +6,41 @@ import { compare, hash } from '../utils/security';
 
 const router = Router();
 
+/**
+ * Change the email associated with the user.
+ */
+router.patch(
+  '/change-email',
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const doc = req.body;
+
+      const db = await mongo.connect();
+      const dbUser = await db
+        .collection('users')
+        .findOneAndUpdate(
+          { email: doc.email },
+          { $set: { email: doc.newEmail, email_verified: doc.verified } },
+          { returnOriginal: false }
+        );
+
+      if (
+        dbUser.value.email !== doc.newEmail &&
+        dbUser.value.email_verified !== doc.verified
+      ) {
+        throw new HttpError("Unable to update user's email.", 500);
+      }
+
+      res.send(true);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+/**
+ * Change the password associated with the user.
+ */
 router.patch(
   '/change-password',
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -33,6 +68,9 @@ router.patch(
   }
 );
 
+/**
+ * Create a user.
+ */
 router.post(
   '/create',
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -55,6 +93,9 @@ router.post(
   }
 );
 
+/**
+ * Delete a user.
+ */
 router.delete(
   '/delete',
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -77,6 +118,9 @@ router.delete(
   }
 );
 
+/**
+ * Gets a user.
+ */
 router.get(
   '/get-user',
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -95,6 +139,9 @@ router.get(
   }
 );
 
+/**
+ * Authenticates a user.
+ */
 router.post(
   '/login',
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -123,6 +170,9 @@ router.post(
   }
 );
 
+/**
+ * Mark the verification status of a user’s email address.
+ */
 router.patch(
   '/verify',
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
