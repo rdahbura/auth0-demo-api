@@ -6,6 +6,7 @@ import cors from 'cors';
 
 import indexRouter from './routes/index';
 import clientsRouter from './routes/clients';
+import customDbRouter from './routes/custom-db';
 import usersRouter from './routes/users';
 
 import logger from './utils/logger';
@@ -23,6 +24,7 @@ app.use(jwtCheck);
 
 app.use('/api', indexRouter);
 app.use('/api/clients', clientsRouter);
+app.use('/api/custom-db', customDbRouter);
 app.use('/api/users', usersRouter);
 
 app.use(error404);

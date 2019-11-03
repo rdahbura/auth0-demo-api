@@ -11,19 +11,23 @@
     "debug:start": "nodemon build/index.js"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
     "jwks-rsa": "^1.6.0",
+    "mongodb": "^3.3.3",
     "morgan": "^1.9.1",
     "pg": "^7.12.1",
     "request": "^2.88.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.1",
+    "@types/mongodb": "^3.3.8",
     "@types/morgan": "^1.7.37",
     "@types/node": "^12.11.2",
     "@types/pg": "^7.11.2",
