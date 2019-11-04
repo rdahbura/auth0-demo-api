@@ -1,4 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import { check } from 'express-validator';
+
 import { HttpError } from '../types/http';
 
 import * as mongo from '../db/mongodb';
@@ -11,6 +13,11 @@ const router = Router();
  */
 router.patch(
   '/change-email',
+  [
+    check('email').isEmail(),
+    check('newEmail').isEmail(),
+    check('verified').isBoolean(),
+  ],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const doc = req.body;
@@ -43,6 +50,12 @@ router.patch(
  */
 router.patch(
   '/change-password',
+  [
+    check('email').isEmail(),
+    check('password')
+      .not()
+      .isEmpty(),
+  ],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const doc = req.body;
@@ -73,6 +86,15 @@ router.patch(
  */
 router.post(
   '/create',
+  [
+    check('email').isEmail(),
+    check('email_verified')
+      .not()
+      .isEmpty(),
+    check('password')
+      .not()
+      .isEmpty(),
+  ],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const doc = req.body;
@@ -98,6 +120,7 @@ router.post(
  */
 router.delete(
   '/delete',
+  [check('id').isMongoId()],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const doc = req.body;
@@ -123,6 +146,7 @@ router.delete(
  */
 router.get(
   '/get-user',
+  [check('email').isEmail()],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const db = await mongo.connect();
@@ -144,6 +168,12 @@ router.get(
  */
 router.post(
   '/login',
+  [
+    check('email').isEmail(),
+    check('password')
+      .not()
+      .isEmpty(),
+  ],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const doc = req.body;
@@ -175,6 +205,7 @@ router.post(
  */
 router.patch(
   '/verify',
+  [check('email').isEmail()],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const doc = req.body;
