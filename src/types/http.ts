@@ -1,17 +1,11 @@
 export class HttpError {
-  message: string;
   status: number;
-  constructor(status: number, message: string) {
-    this.message = message;
+  message: string;
+  errors: object[];
+  constructor(status: number, message: string, errors?: object[]) {
     this.status = status;
-  }
-}
-
-export class HttpValidationError extends HttpError {
-  errors: object[] | undefined;
-  constructor(status: number, message: string, errors?: object[] | undefined) {
-    super(status, message);
-    this.errors = errors;
+    this.message = message;
+    this.errors = errors || [];
   }
 }
 
