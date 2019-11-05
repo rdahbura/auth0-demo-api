@@ -7,7 +7,7 @@ export const error404 = (
   res: Response,
   next: NextFunction
 ): void => {
-  const err = new HttpError('Not Found', 404);
+  const err = new HttpError(404, 'Not Found');
   next(err);
 };
 
@@ -18,8 +18,5 @@ export const error = (
   next: NextFunction
 ): void => {
   res.status(err.status || 500);
-  res.json({
-    message: err.message,
-    error: err,
-  });
+  res.json(err);
 };

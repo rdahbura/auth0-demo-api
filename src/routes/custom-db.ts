@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { check } from 'express-validator';
+import { check, validationResult } from 'express-validator';
 
-import { HttpError } from '../types/http';
+import { HttpError, HttpValidationError } from '../types/http';
 
 import * as mongo from '../db/mongodb';
 import { compare, hash } from '../utils/security';
@@ -20,6 +20,12 @@ router.patch(
   ],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const msg = 'Request failed validation.';
+        throw new HttpValidationError(422, msg, errors.array());
+      }
+
       const doc = req.body;
 
       const db = await mongo.connect();
@@ -35,7 +41,8 @@ router.patch(
         dbUser.value.email !== doc.newEmail &&
         dbUser.value.email_verified !== doc.verified
       ) {
-        throw new HttpError("Unable to update user's email.", 500);
+        const msg = "Unable to update user's email.";
+        throw new HttpError(500, msg);
       }
 
       res.send(true);
@@ -58,6 +65,12 @@ router.patch(
   ],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const msg = 'Request failed validation.';
+        throw new HttpValidationError(422, msg, errors.array());
+      }
+
       const doc = req.body;
       doc.password = await hash(doc.password);
 
@@ -71,7 +84,8 @@ router.patch(
         );
 
       if (dbUser.value.password !== doc.password) {
-        throw new HttpError('Unable to change password.', 500);
+        const msg = 'Unable to change password.';
+        throw new HttpError(500, msg);
       }
 
       res.send(true);
@@ -97,6 +111,12 @@ router.post(
   ],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const msg = 'Request failed validation.';
+        throw new HttpValidationError(422, msg, errors.array());
+      }
+
       const doc = req.body;
       doc.password = await hash(doc.password);
       doc.email_verified = false;
@@ -105,7 +125,8 @@ router.post(
       const dbUser = await db.collection('users').insertOne(doc);
 
       if (dbUser.insertedCount !== 1) {
-        throw new HttpError('Unable to create user.', 500);
+        const msg = 'Unable to create user.';
+        throw new HttpError(500, msg);
       }
 
       res.status(204).send();
@@ -123,6 +144,12 @@ router.delete(
   [check('id').isMongoId()],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const msg = 'Request failed validation.';
+        throw new HttpValidationError(422, msg, errors.array());
+      }
+
       const doc = req.body;
 
       const db = await mongo.connect();
@@ -131,7 +158,8 @@ router.delete(
         .deleteOne({ _id: mongo.createObjectId(doc.id) });
 
       if (dbUser.deletedCount !== 1) {
-        throw new HttpError('Unable to delete user.', 500);
+        const msg = 'Unable to delete user.';
+        throw new HttpError(500, msg);
       }
 
       res.status(204).send();
@@ -149,6 +177,12 @@ router.get(
   [check('email').isEmail()],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const msg = 'Request failed validation.';
+        throw new HttpValidationError(422, msg, errors.array());
+      }
+
       const db = await mongo.connect();
       const dbUser = await db
         .collection('users')
@@ -176,19 +210,27 @@ router.post(
   ],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const msg = 'Request failed validation.';
+        throw new HttpValidationError(422, msg, errors.array());
+      }
+
       const doc = req.body;
 
       const db = await mongo.connect();
       const dbUser = await db.collection('users').findOne({ email: doc.email });
 
       if (!dbUser) {
-        throw new HttpError('Invalid username and/or password.', 401);
+        const msg = 'Invalid username and/or password.';
+        throw new HttpError(401, msg);
       }
 
       const isValidPassword = await compare(doc.password, dbUser.password);
 
       if (!isValidPassword) {
-        throw new HttpError('Invalid username and/or password.', 401);
+        const msg = 'Invalid username and/or password.';
+        throw new HttpError(401, msg);
       }
 
       delete dbUser.password;
@@ -208,6 +250,12 @@ router.patch(
   [check('email').isEmail()],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const msg = 'Request failed validation.';
+        throw new HttpValidationError(422, msg, errors.array());
+      }
+
       const doc = req.body;
 
       const db = await mongo.connect();
@@ -220,7 +268,8 @@ router.patch(
         );
 
       if (dbUser.value.email_verified !== true) {
-        throw new HttpError('Unable to verify user.', 500);
+        const msg = 'Unable to verify user.';
+        throw new HttpError(500, msg);
       }
 
       res.send(true);
