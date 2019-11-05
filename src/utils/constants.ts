@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const MONGO_CLUSTER = process.env.MONGO_CLUSTER;
 const MONGO_DB = process.env.MONGO_DB;
 const MONGO_PWD = process.env.MONGO_PASSWORD;
