@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { check, validationResult } from 'express-validator';
 
-import { HttpError } from '../types/http';
-
 import * as mongo from '../db/mongodb';
+import { HttpError } from '../types/http';
 import { compare, hash } from '../utils/security';
 
 const router = Router();
@@ -22,8 +21,8 @@ router.patch(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        const msg = 'Request failed validation.';
-        next(new HttpError(422, msg, errors.array()));
+        const message = 'Request failed validation.';
+        next(new HttpError(422, message, errors.array()));
       }
 
       const body = req.body;
@@ -42,7 +41,7 @@ router.patch(
         dbUser.value.email_verified !== body.verified
       ) {
         const msg = "Unable to update user's email.";
-        throw new HttpError(500, msg);
+        next(new HttpError(500, msg));
       }
 
       res.send(true);
@@ -67,8 +66,8 @@ router.patch(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        const msg = 'Request failed validation.';
-        next(new HttpError(422, msg, errors.array()));
+        const message = 'Request failed validation.';
+        next(new HttpError(422, message, errors.array()));
       }
 
       const body = req.body;
@@ -85,7 +84,7 @@ router.patch(
 
       if (dbUser.value.password !== body.password) {
         const msg = 'Unable to change password.';
-        throw new HttpError(500, msg);
+        next(new HttpError(500, msg));
       }
 
       res.send(true);
@@ -113,8 +112,8 @@ router.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        const msg = 'Request failed validation.';
-        next(new HttpError(422, msg, errors.array()));
+        const message = 'Request failed validation.';
+        next(new HttpError(422, message, errors.array()));
       }
 
       const body = req.body;
@@ -126,7 +125,7 @@ router.post(
 
       if (dbUser.insertedCount !== 1) {
         const msg = 'Unable to create user.';
-        throw new HttpError(500, msg);
+        next(new HttpError(500, msg));
       }
 
       res.status(204).send();
@@ -146,8 +145,8 @@ router.delete(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        const msg = 'Request failed validation.';
-        next(new HttpError(422, msg, errors.array()));
+        const message = 'Request failed validation.';
+        next(new HttpError(422, message, errors.array()));
       }
 
       const body = req.body;
@@ -159,7 +158,7 @@ router.delete(
 
       if (dbUser.deletedCount !== 1) {
         const msg = 'Unable to delete user.';
-        throw new HttpError(500, msg);
+        next(new HttpError(500, msg));
       }
 
       res.status(204).send();
@@ -179,8 +178,8 @@ router.get(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        const msg = 'Request failed validation.';
-        next(new HttpError(422, msg, errors.array()));
+        const message = 'Request failed validation.';
+        next(new HttpError(422, message, errors.array()));
       }
 
       const query = req.query;
@@ -214,8 +213,8 @@ router.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        const msg = 'Request failed validation.';
-        next(new HttpError(422, msg, errors.array()));
+        const message = 'Request failed validation.';
+        next(new HttpError(422, message, errors.array()));
       }
 
       const body = req.body;
@@ -227,14 +226,14 @@ router.post(
 
       if (!dbUser) {
         const msg = 'Invalid username and/or password.';
-        throw new HttpError(401, msg);
+        next(new HttpError(401, msg));
       }
 
       const isValidPassword = await compare(body.password, dbUser.password);
 
       if (!isValidPassword) {
         const msg = 'Invalid username and/or password.';
-        throw new HttpError(401, msg);
+        next(new HttpError(401, msg));
       }
 
       delete dbUser.password;
@@ -256,8 +255,8 @@ router.patch(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        const msg = 'Request failed validation.';
-        next(new HttpError(422, msg, errors.array()));
+        const message = 'Request failed validation.';
+        next(new HttpError(422, message, errors.array()));
       }
 
       const body = req.body;
@@ -273,7 +272,7 @@ router.patch(
 
       if (dbUser.value.email_verified !== true) {
         const msg = 'Unable to verify user.';
-        throw new HttpError(500, msg);
+        next(new HttpError(500, msg));
       }
 
       res.send(true);

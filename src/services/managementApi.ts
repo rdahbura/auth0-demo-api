@@ -1,8 +1,8 @@
 import request from 'request';
 import util from 'util';
 
-import { IDictionary } from '../types/collections';
 import { HttpError } from '../types/http';
+import { IDictionary } from '../types/collections';
 import { getToken } from './authorizationApi';
 
 const AUTH0_MGT_API = `https://${process.env.AUTH0_DOMAIN}/api/v2`;
