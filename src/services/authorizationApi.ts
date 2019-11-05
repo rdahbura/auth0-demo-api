@@ -3,6 +3,12 @@ import util from 'util';
 
 import logger from '../utils/logger';
 import { HttpError, Token } from '../types/http';
+import {
+  AUTH0_DOMAIN,
+  AUTH0_AUDIENCE_MGT_API,
+  CLIENT_ID,
+  CLIENT_SECRET,
+} from '../utils/constants';
 
 const token = new Token();
 
@@ -20,12 +26,12 @@ export const getToken = async (): Promise<Token> => {
   logger.debug('Fetching new token...');
 
   const { body, statusCode } = await postAsync({
-    url: `https://${process.env.AUTH0_DOMAIN}/oauth/token`,
+    url: `https://${AUTH0_DOMAIN}/oauth/token`,
     body: {
       grant_type: 'client_credentials',
-      audience: process.env.AUTH0_AUDIENCE_MGT_API,
-      client_id: process.env.CLIENT_ID,
-      client_secret: process.env.CLIENT_SECRET,
+      audience: AUTH0_AUDIENCE_MGT_API,
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
     },
     json: true,
   });

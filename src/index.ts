@@ -9,11 +9,11 @@ import cors from 'cors';
 import logger from './utils/logger';
 import { checkJwt } from './utils/security';
 import { error, error404 } from './utils/error';
+import { PORT } from './utils/constants';
 
 import routes from './routes';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // Configure logging
 app.use(morgan('dev'));

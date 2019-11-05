@@ -1,5 +1,7 @@
 import { createLogger, format, transports, LoggerOptions } from 'winston';
 
+import { NODE_ENV } from './constants';
+
 const { colorize, combine, printf, timestamp, uncolorize } = format;
 
 const consoleFormat = printf(
@@ -12,7 +14,7 @@ const fileFormat = printf(
 
 const consoleOptions: transports.ConsoleTransportOptions = {
   format: combine(colorize(), timestamp(), consoleFormat),
-  level: process.env.NODE_ENV === 'production' ? 'error' : 'debug',
+  level: NODE_ENV === 'production' ? 'error' : 'debug',
 };
 
 const fileOptions: transports.FileTransportOptions = {

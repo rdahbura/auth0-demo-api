@@ -1,7 +1,9 @@
 import { Pool, QueryResult, QueryResultRow } from 'pg';
 
+import { DATABASE_URL } from '../utils/constants';
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: DATABASE_URL,
   ssl: true,
 });
 
