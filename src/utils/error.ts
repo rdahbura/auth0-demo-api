@@ -17,6 +17,6 @@ export const error = (
   res: Response,
   next: NextFunction
 ): void => {
-  res.status(err.statusCode || 500);
+  res.status(err.statusCode ?? 500);
   res.json(err);
 };

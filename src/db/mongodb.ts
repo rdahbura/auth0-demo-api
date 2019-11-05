@@ -12,7 +12,7 @@ const MONGO_URI = `mongodb+srv://${MONGO_USR}:${MONGO_PWD}@${MONGO_CLUSTER}/${MO
 let cachedClient: mongodb.MongoClient;
 
 export async function connect(): Promise<mongodb.Db> {
-  if (cachedClient && cachedClient.isConnected()) {
+  if (cachedClient?.isConnected()) {
     return cachedClient.db();
   }
 
