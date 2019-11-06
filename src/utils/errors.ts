@@ -43,7 +43,7 @@ export const errorLogger = (
   next(err);
 };
 
-export const handleNotFound = (
+export const routeNotFound = (
   req: Request,
   res: Response,
   next: NextFunction

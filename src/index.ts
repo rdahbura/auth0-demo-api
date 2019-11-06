@@ -8,7 +8,7 @@ import cors from 'cors';
 
 import logger from './utils/logger';
 import { checkJwt } from './utils/security';
-import { error, errorLogger, handleNotFound } from './utils/errors';
+import { error, errorLogger, routeNotFound } from './utils/errors';
 import { PORT } from './utils/constants';
 
 import routes from './routes';
@@ -28,7 +28,7 @@ app.use(checkJwt);
 
 // Configure routes
 app.use('/api', routes);
-app.use(handleNotFound);
+app.use(routeNotFound);
 
 // Configure error handlers
 app.use(errorLogger);
