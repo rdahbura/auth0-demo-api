@@ -1,17 +1,14 @@
-export class HttpError {
+export class HttpError extends Error {
   statusCode: number;
   message: string;
-  constructor(statusCode: number, message: string) {
+  errors: object[] | undefined;
+  constructor(statusCode: number, message: string, errors?: object[]) {
+    super(message);
+    Object.setPrototypeOf(this, new.target.prototype);
+
     this.statusCode = statusCode;
     this.message = message;
-  }
-}
-
-export class HttpValidationError extends HttpError {
-  errors: object[];
-  constructor(statusCode: number, message: string, errors?: object[]) {
-    super(statusCode, message);
-    this.errors = errors ?? [];
+    this.errors = errors;
   }
 }
 

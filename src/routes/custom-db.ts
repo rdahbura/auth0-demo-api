@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import { check, validationResult } from 'express-validator';
 
 import * as mongo from '../db/mongodb';
-import { HttpError, HttpValidationError } from '../types/http';
+import { HttpError } from '../types/http';
 import { compare, hash } from '../utils/security';
 
 const router = Router();
@@ -22,7 +22,7 @@ router.patch(
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const msg = 'Request failed validation.';
-        const error = new HttpValidationError(422, msg, errors.array());
+        const error = new HttpError(422, msg, errors.array());
         return next(error);
       }
 
@@ -69,7 +69,7 @@ router.patch(
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const msg = 'Request failed validation.';
-        const error = new HttpValidationError(422, msg, errors.array());
+        const error = new HttpError(422, msg, errors.array());
         return next(error);
       }
 
@@ -117,7 +117,7 @@ router.post(
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const msg = 'Request failed validation.';
-        const error = new HttpValidationError(422, msg, errors.array());
+        const error = new HttpError(422, msg, errors.array());
         return next(error);
       }
 
@@ -152,7 +152,7 @@ router.delete(
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const msg = 'Request failed validation.';
-        const error = new HttpValidationError(422, msg, errors.array());
+        const error = new HttpError(422, msg, errors.array());
         return next(error);
       }
 
@@ -187,7 +187,7 @@ router.get(
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const msg = 'Request failed validation.';
-        const error = new HttpValidationError(422, msg, errors.array());
+        const error = new HttpError(422, msg, errors.array());
         return next(error);
       }
 
@@ -223,7 +223,7 @@ router.post(
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const msg = 'Request failed validation.';
-        const error = new HttpValidationError(422, msg, errors.array());
+        const error = new HttpError(422, msg, errors.array());
         return next(error);
       }
 
@@ -268,7 +268,7 @@ router.patch(
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const msg = 'Request failed validation.';
-        const error = new HttpValidationError(422, msg, errors.array());
+        const error = new HttpError(422, msg, errors.array());
         return next(error);
       }
 
