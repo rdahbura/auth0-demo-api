@@ -9,7 +9,7 @@ const MONGO_DB = process.env.MONGO_DB;
 const MONGO_PWD = process.env.MONGO_PWD;
 const MONGO_USR = process.env.MONGO_USR;
 const NODE_ENV = process.env.NODE_ENV;
-const PORT = process.env.PORT ?? 5000;
+const PORT = process.env.PORT;
 
 const SALT_ROUNDS = 10;
 

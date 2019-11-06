@@ -1,13 +1,16 @@
+import { STATUS_CODES } from 'http';
+
 export class HttpError extends Error {
   statusCode: number;
   message: string;
   errors: object[] | undefined;
-  constructor(statusCode: number, message: string, errors?: object[]) {
+
+  constructor(statusCode: number, message?: string, errors?: object[]) {
     super(message);
     Object.setPrototypeOf(this, new.target.prototype);
 
     this.statusCode = statusCode;
-    this.message = message;
+    this.message = message || STATUS_CODES[statusCode] || statusCode.toString();
     this.errors = errors;
   }
 }
