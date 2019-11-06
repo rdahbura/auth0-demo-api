@@ -27,7 +27,7 @@ export const createClient = async (client: object): Promise<string> => {
   });
 
   if (!/^2/.test('' + statusCode)) {
-    throw new HttpError(body.message, statusCode);
+    throw new HttpError(statusCode, body.message);
   }
 
   return body;
@@ -54,7 +54,7 @@ export const getClient = async (
   });
 
   if (!/^2/.test('' + statusCode)) {
-    throw new HttpError(body.message, statusCode);
+    throw new HttpError(statusCode, body.message);
   }
 
   return body;
@@ -77,7 +77,7 @@ export const getClients = async (qs: IDictionary): Promise<string> => {
   });
 
   if (!/^2/.test('' + statusCode)) {
-    throw new HttpError(body.message, statusCode);
+    throw new HttpError(statusCode, body.message);
   }
 
   return body;
@@ -101,7 +101,7 @@ export const getUser = async (id: string, qs: IDictionary): Promise<string> => {
   });
 
   if (!/^2/.test('' + statusCode)) {
-    throw new HttpError(body.message, statusCode);
+    throw new HttpError(statusCode, body.message);
   }
 
   return body;
@@ -124,7 +124,7 @@ export const getUsers = async (qs: IDictionary): Promise<string> => {
   });
 
   if (!/^2/.test('' + statusCode)) {
-    throw new HttpError(body.message, statusCode);
+    throw new HttpError(statusCode, body.message);
   }
 
   return body;

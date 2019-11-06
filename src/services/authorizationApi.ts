@@ -37,7 +37,7 @@ export const getToken = async (): Promise<Token> => {
   });
 
   if (!/^2/.test('' + statusCode)) {
-    throw new HttpError(body.message, statusCode);
+    throw new HttpError(statusCode, body.message);
   }
 
   token.type = body.token_type;
