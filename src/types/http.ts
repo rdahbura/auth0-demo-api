@@ -2,15 +2,13 @@ import { STATUS_CODES } from 'http';
 
 export class HttpError extends Error {
   statusCode: number;
-  message: string;
   errors: object[] | undefined;
 
   constructor(statusCode: number, message?: string, errors?: object[]) {
-    super(message);
+    super(message || STATUS_CODES[statusCode] || statusCode.toString());
     Object.setPrototypeOf(this, new.target.prototype);
 
     this.statusCode = statusCode;
-    this.message = message || STATUS_CODES[statusCode] || statusCode.toString();
     this.errors = errors;
   }
 }
