@@ -16,12 +16,12 @@ const checkJwt = expressJwt({
   algorithms: ['RS256'],
 });
 
-async function compare(clear: string, hash: string): Promise<boolean> {
+export async function compare(clear: string, hash: string): Promise<boolean> {
   return await bcrypt.compare(clear, hash);
 }
 
-async function hash(clear: string): Promise<string> {
+export async function hash(clear: string): Promise<string> {
   return await bcrypt.hash(clear, SALT_ROUNDS);
 }
 
-export { checkJwt, compare, hash };
+export { checkJwt };

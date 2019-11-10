@@ -7,7 +7,7 @@ const pool = new Pool({
   ssl: true,
 });
 
-export function query<T>(
+export async function query<T>(
   text: string,
   values?: T[]
 ): Promise<QueryResult<QueryResultRow>> {

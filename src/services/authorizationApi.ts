@@ -17,7 +17,7 @@ const [postAsync] = [request.post].map(util.promisify);
 /**
  * Request a token by using client credentials grant.
  */
-export const getToken = async (): Promise<Token> => {
+export async function getToken(): Promise<Token> {
   if (token.isValid()) {
     logger.debug('Returning existing token...');
     return token;
@@ -45,4 +45,4 @@ export const getToken = async (): Promise<Token> => {
   token.expiresIn = body.expires_in;
 
   return token;
-};
+}

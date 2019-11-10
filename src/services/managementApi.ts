@@ -14,7 +14,7 @@ const [getAsync, postAsync] = [request.get, request.post].map(util.promisify);
  * Creates a new client application.
  * @param client
  */
-export const createClient = async (client: object): Promise<string> => {
+export async function createClient(client: object): Promise<string> {
   const token = (await getToken()).value;
 
   const { body, statusCode } = await postAsync({
@@ -31,17 +31,14 @@ export const createClient = async (client: object): Promise<string> => {
   }
 
   return body;
-};
+}
 
 /**
  * Retrieves a client by its id.
  * @param id
  * @param qs
  */
-export const getClient = async (
-  id: string,
-  qs: IDictionary
-): Promise<string> => {
+export async function getClient(id: string, qs: IDictionary): Promise<string> {
   const token = (await getToken()).value;
 
   const { body, statusCode } = await getAsync({
@@ -58,13 +55,13 @@ export const getClient = async (
   }
 
   return body;
-};
+}
 
 /**
  * Retrieves a list of all client applications
  * @param qs
  */
-export const getClients = async (qs: IDictionary): Promise<string> => {
+export async function getClients(qs: IDictionary): Promise<string> {
   const token = (await getToken()).value;
 
   const { body, statusCode } = await getAsync({
@@ -81,14 +78,14 @@ export const getClients = async (qs: IDictionary): Promise<string> => {
   }
 
   return body;
-};
+}
 
 /**
  * Retrieves a user by its id.
  * @param id
  * @param qs
  */
-export const getUser = async (id: string, qs: IDictionary): Promise<string> => {
+export async function getUser(id: string, qs: IDictionary): Promise<string> {
   const token = (await getToken()).value;
 
   const { body, statusCode } = await getAsync({
@@ -105,13 +102,13 @@ export const getUser = async (id: string, qs: IDictionary): Promise<string> => {
   }
 
   return body;
-};
+}
 
 /**
  * Retrieves a list of all userss
  * @param qs
  */
-export const getUsers = async (qs: IDictionary): Promise<string> => {
+export async function getUsers(qs: IDictionary): Promise<string> {
   const token = (await getToken()).value;
 
   const { body, statusCode } = await getAsync({
@@ -128,4 +125,4 @@ export const getUsers = async (qs: IDictionary): Promise<string> => {
   }
 
   return body;
-};
+}
