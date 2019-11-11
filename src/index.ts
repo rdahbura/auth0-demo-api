@@ -47,12 +47,10 @@ async function shutdown(): Promise<void> {
   server.close();
 }
 
-process.on('SIGINT', async () => {
-  await shutdown();
-  process.exit();
-});
-
-process.on('SIGTERM', async () => {
-  await shutdown();
-  process.exit();
+const signals: NodeJS.Signals[] = ['SIGINT', 'SIGTERM'];
+signals.forEach((v) => {
+  process.on(v, async () => {
+    await shutdown();
+    process.exit();
+  });
 });

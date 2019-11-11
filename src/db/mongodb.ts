@@ -13,7 +13,7 @@ const MONGO_URI = `mongodb+srv://${MONGO_USR}:${MONGO_PWD}@${MONGO_CLUSTER}/${MO
 let cachedClient: mongodb.MongoClient;
 
 export async function close(): Promise<void> {
-  logger.debug('Closing mongodb and its underlying connections...');
+  logger.debug('Closing mongodb connections...');
   if (cachedClient?.isConnected()) {
     await cachedClient.close();
   }
