@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
+    "format": "prettier --write './src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "debug": "yarn run build && concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"yarn run debug:build\" \"yarn run debug:start\"",
     "debug:build": "tsc -w",
     "debug:start": "nodemon build/index.js"
