@@ -2,14 +2,16 @@ import 'dotenv/config';
 
 import express from 'express';
 import compression from 'compression';
+import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import cors from 'cors';
 
 import logger from './utils/logger';
-import { checkJwt } from './utils/security';
-import { error, errorLogger, routeNotFound } from './utils/errors';
 import { PORT } from './utils/constants';
+import { checkJwt } from './utils/security';
+import { close as closeMongodb } from './db/mongodb';
+import { close as closePg } from './db/pg';
+import { error, errorLogger, routeNotFound } from './utils/errors';
 
 import routes from './routes';
 
@@ -35,6 +37,22 @@ app.use(errorLogger);
 app.use(error);
 
 // Start the server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   logger.info(`Server started listening on port ${PORT}...`);
+});
+
+async function shutdown(): Promise<void> {
+  await closeMongodb();
+  await closePg();
+  server.close();
+}
+
+process.on('SIGINT', async () => {
+  await shutdown();
+  process.exit();
+});
+
+process.on('SIGTERM', async () => {
+  await shutdown();
+  process.exit();
 });

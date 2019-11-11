@@ -1,5 +1,6 @@
 import mongodb, { ObjectId } from 'mongodb';
 
+import logger from '../utils/logger';
 import {
   MONGO_CLUSTER,
   MONGO_DB,
@@ -10,6 +11,13 @@ import {
 const MONGO_URI = `mongodb+srv://${MONGO_USR}:${MONGO_PWD}@${MONGO_CLUSTER}/${MONGO_DB}?retryWrites=true`;
 
 let cachedClient: mongodb.MongoClient;
+
+export async function close(): Promise<void> {
+  logger.debug('Closing mongodb and its underlying connections...');
+  if (cachedClient?.isConnected()) {
+    await cachedClient.close();
+  }
+}
 
 export async function connect(): Promise<mongodb.Db> {
   if (cachedClient?.isConnected()) {
