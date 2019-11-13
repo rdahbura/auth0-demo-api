@@ -9,7 +9,7 @@ const pool = new Pool({
 });
 
 export async function close(): Promise<void> {
-  logger.debug('Closing pg connections...');
+  logger.debug('Closing PostgreSQL connections...');
   await pool.end();
 }
 
