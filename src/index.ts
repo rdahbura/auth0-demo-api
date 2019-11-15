@@ -17,6 +17,9 @@ import routes from './routes';
 
 const app = express();
 
+// Assign application settings
+app.set('port', PORT);
+
 // Configure logging
 app.use(morgan('dev'));
 
