@@ -107,9 +107,6 @@ router.post(
   '/users',
   [
     body('email').isEmail(),
-    body('email_verified')
-      .not()
-      .isEmpty(),
     body('password')
       .not()
       .isEmpty(),
@@ -124,6 +121,7 @@ router.post(
       }
 
       const body = req.body;
+      body.email_verified = body.email_verified ?? false;
       body.password = await hash(body.password);
 
       const db = await mongo.connect();
