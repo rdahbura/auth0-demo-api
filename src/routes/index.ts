@@ -3,7 +3,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import * as pg from '../db/postgresql';
 
 import clientsRouter from './clients';
-import databaseRouter from './database';
+import databaseRouter from './databases';
 import usersRouter from './users';
 
 const router = Router();
@@ -29,7 +29,7 @@ router.get(
 );
 
 router.use('/clients', clientsRouter);
-router.use('/database', databaseRouter);
+router.use('/databases', databaseRouter);
 router.use('/users', usersRouter);
 
 export default router;
