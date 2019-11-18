@@ -10,7 +10,7 @@ import logger from './utils/logger';
 import { PORT } from './utils/constants';
 import { checkJwt } from './utils/security';
 import { close as closeMongodb } from './db/mongodb';
-import { close as closePostgreSQL } from './db/pg';
+import { close as closePostgreSQL } from './db/postgresql';
 import { error, errorLogger, routeNotFound } from './utils/errors';
 
 import routes from './routes';

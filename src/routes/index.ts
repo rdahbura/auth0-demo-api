@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 
-import * as pg from '../db/pg';
+import * as pg from '../db/postgresql';
 
 import clientsRouter from './clients';
 import customDbRouter from './custom-db';
