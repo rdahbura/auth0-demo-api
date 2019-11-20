@@ -24,12 +24,10 @@ export async function connect(): Promise<mongodb.Db> {
     return cachedClient.db();
   }
 
-  const client = await mongodb.MongoClient.connect(MONGO_URI, {
+  cachedClient = await mongodb.MongoClient.connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-
-  cachedClient = client;
 
   return cachedClient.db();
 }
