@@ -22,7 +22,9 @@ export function errorLogger(
   res: Response,
   next: NextFunction
 ): void {
-  logger.error(err);
+  const error = Object.assign({ message: err.message }, err);
+  logger.error(error);
+
   next(err);
 }
 
