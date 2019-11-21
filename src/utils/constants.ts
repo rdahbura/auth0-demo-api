@@ -10,6 +10,7 @@ const MONGO_PWD = process.env.MONGO_PWD;
 const MONGO_USR = process.env.MONGO_USR;
 const NODE_ENV = process.env.NODE_ENV;
 const PORT = process.env.PORT;
+const WEB_CONCURRENCY = process.env.WEB_CONCURRENCY;
 
 const SALT_ROUNDS = 10;
 
@@ -27,4 +28,5 @@ export {
   NODE_ENV,
   PORT,
   SALT_ROUNDS,
+  WEB_CONCURRENCY,
 };
