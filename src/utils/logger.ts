@@ -31,6 +31,5 @@ const loggerOptions: LoggerOptions = {
 };
 
 const logger = createLogger(loggerOptions);
-logger.debug('Logging initialized at debug level.');
 
 export default logger;
