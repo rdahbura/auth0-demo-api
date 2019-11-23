@@ -19,11 +19,11 @@ const [postAsync] = [request.post].map(util.promisify);
  */
 export async function getToken(): Promise<Token> {
   if (token.isValid()) {
-    logger.debug('Returning existing token...');
+    logger.info('Returning existing token...');
     return token;
   }
 
-  logger.debug('Fetching new token...');
+  logger.info('Fetching new token...');
 
   const { body, statusCode } = await postAsync({
     url: `https://${AUTH0_DOMAIN}/oauth/token`,

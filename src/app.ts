@@ -1,7 +1,6 @@
 import 'dotenv/config';
 
 import express from 'express';
-import compression from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -15,7 +14,7 @@ import { error, errorLogger, routeNotFound } from './utils/errors';
 
 import routes from './routes';
 
-const start = (): void => {
+function start(): void {
   const app = express();
 
   // Assign application settings
@@ -27,7 +26,6 @@ const start = (): void => {
   // Configure middleware
   app.use(cors());
   app.use(helmet());
-  app.use(compression());
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(checkJwt);
@@ -40,7 +38,7 @@ const start = (): void => {
   app.use(errorLogger);
   app.use(error);
 
-  // Start the server
+  // Start http server
   const server = app.listen(PORT, () => {
     logger.info(`Server started listening on port ${PORT}...`);
   });
@@ -49,15 +47,11 @@ const start = (): void => {
     await closeMongodb();
     await closePostgreSQL();
     server.close();
+    process.exit();
   }
 
-  const signals: NodeJS.Signals[] = ['SIGINT', 'SIGTERM'];
-  signals.forEach((v) => {
-    process.on(v, async () => {
-      await shutdown();
-      process.exit();
-    });
-  });
-};
+  process.on('SIGINT', async () => await shutdown());
+  process.on('SIGTERM', async () => await shutdown());
+}
 
 export default start;
