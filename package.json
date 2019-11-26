@@ -21,7 +21,7 @@
     "express-validator": "^6.3.0",
     "helmet": "^3.21.2",
     "jwks-rsa": "^1.6.0",
-    "mongodb": "^3.3.4",
+    "mongodb": "^3.3.5",
     "morgan": "^1.9.1",
     "pg": "^7.14.0",
     "request": "^2.88.0",
