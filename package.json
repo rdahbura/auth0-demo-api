@@ -51,7 +51,7 @@
     "typescript": "^3.7.2"
   },
   "engines": {
-    "node": "10",
+    "node": "12",
     "yarn": "1.19"
   },
   "eslintConfig": {
