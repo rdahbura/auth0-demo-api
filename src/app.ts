@@ -15,6 +15,7 @@ import { error, errorLogger, routeNotFound } from './utils/errors';
 import routes from './routes';
 
 function start(): void {
+  // Create application instance
   const app = express();
 
   // Assign application settings
