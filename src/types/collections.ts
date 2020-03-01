@@ -1,3 +1,3 @@
-export interface IDictionary {
-  [key: string]: string | string[];
+export interface IDictionary<T> {
+  [key: string]: T;
 }

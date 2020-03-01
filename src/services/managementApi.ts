@@ -1,5 +1,4 @@
-import request from 'request';
-import util from 'util';
+import fetch from 'node-fetch';
 
 import { AUTH0_DOMAIN } from '../utils/constants';
 import { HttpError } from '../types/http';
@@ -8,8 +7,6 @@ import { getToken } from './authorizationApi';
 
 const AUTH0_MGT_API = `https://${AUTH0_DOMAIN}/api/v2`;
 
-const [getAsync, postAsync] = [request.get, request.post].map(util.promisify);
-
 /**
  * Creates a new client application.
  * @param client
@@ -17,14 +14,19 @@ const [getAsync, postAsync] = [request.get, request.post].map(util.promisify);
 export async function createClient(client: object): Promise<string> {
   const token = (await getToken()).value;
 
-  const { body, statusCode } = await postAsync({
-    url: `${AUTH0_MGT_API}/clients`,
+  const url = new URL(`${AUTH0_MGT_API}/clients`);
+
+  const response = await fetch(url, {
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     },
-    body: client,
-    json: true,
+    body: JSON.stringify(client),
   });
+
+  const body = await response.json();
+  const statusCode = response.status;
 
   if (!/^2/.test('' + statusCode)) {
     throw new HttpError(statusCode, body.message);
@@ -38,17 +40,23 @@ export async function createClient(client: object): Promise<string> {
  * @param id
  * @param qs
  */
-export async function getClient(id: string, qs: IDictionary): Promise<string> {
+export async function getClient(
+  id: string,
+  qs: IDictionary<string>
+): Promise<string> {
   const token = (await getToken()).value;
 
-  const { body, statusCode } = await getAsync({
-    url: `${AUTH0_MGT_API}/clients/${id}`,
+  const url = new URL(`${AUTH0_MGT_API}/clients/${id}`);
+  Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
+
+  const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    qs: qs,
-    json: true,
   });
+
+  const body = await response.json();
+  const statusCode = response.status;
 
   if (!/^2/.test('' + statusCode)) {
     throw new HttpError(statusCode, body.message);
@@ -61,17 +69,20 @@ export async function getClient(id: string, qs: IDictionary): Promise<string> {
  * Retrieves a list of all client applications
  * @param qs
  */
-export async function getClients(qs: IDictionary): Promise<string> {
+export async function getClients(qs: IDictionary<string>): Promise<string> {
   const token = (await getToken()).value;
 
-  const { body, statusCode } = await getAsync({
-    url: `${AUTH0_MGT_API}/clients`,
+  const url = new URL(`${AUTH0_MGT_API}/clients`);
+  Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
+
+  const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    qs: qs,
-    json: true,
   });
+
+  const body = await response.json();
+  const statusCode = response.status;
 
   if (!/^2/.test('' + statusCode)) {
     throw new HttpError(statusCode, body.message);
@@ -85,17 +96,23 @@ export async function getClients(qs: IDictionary): Promise<string> {
  * @param id
  * @param qs
  */
-export async function getUser(id: string, qs: IDictionary): Promise<string> {
+export async function getUser(
+  id: string,
+  qs: IDictionary<string>
+): Promise<string> {
   const token = (await getToken()).value;
 
-  const { body, statusCode } = await getAsync({
-    url: `${AUTH0_MGT_API}/users/${id}`,
+  const url = new URL(`${AUTH0_MGT_API}/users/${id}`);
+  Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
+
+  const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    qs: qs,
-    json: true,
   });
+
+  const body = await response.json();
+  const statusCode = response.status;
 
   if (!/^2/.test('' + statusCode)) {
     throw new HttpError(statusCode, body.message);
@@ -108,17 +125,20 @@ export async function getUser(id: string, qs: IDictionary): Promise<string> {
  * Retrieves a list of all userss
  * @param qs
  */
-export async function getUsers(qs: IDictionary): Promise<string> {
+export async function getUsers(qs: IDictionary<string>): Promise<string> {
   const token = (await getToken()).value;
 
-  const { body, statusCode } = await getAsync({
-    url: `${AUTH0_MGT_API}/users`,
+  const url = new URL(`${AUTH0_MGT_API}/users`);
+  Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
+
+  const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    qs: qs,
-    json: true,
   });
+
+  const body = await response.json();
+  const statusCode = response.status;
 
   if (!/^2/.test('' + statusCode)) {
     throw new HttpError(statusCode, body.message);
