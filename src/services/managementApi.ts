@@ -49,6 +49,7 @@ export async function getClient(
   Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
 
   const res = await fetch(url, {
+    method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -74,6 +75,7 @@ export async function getClients(qs: IDictionary<string>): Promise<string> {
   Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
 
   const res = await fetch(url, {
+    method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -103,6 +105,7 @@ export async function getUser(
   Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
 
   const res = await fetch(url, {
+    method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -128,6 +131,7 @@ export async function getUsers(qs: IDictionary<string>): Promise<string> {
   Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
 
   const res = await fetch(url, {
+    method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
     },
