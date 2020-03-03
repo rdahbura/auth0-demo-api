@@ -24,7 +24,7 @@ export async function getToken(): Promise<Token> {
 
   const url = new URL(`https://${AUTH0_DOMAIN}/oauth/token`);
 
-  const response = await fetch(url, {
+  const res = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -37,11 +37,10 @@ export async function getToken(): Promise<Token> {
     }),
   });
 
-  const body = await response.json();
-  const statusCode = response.status;
+  const body = await res.json();
 
-  if (!/^2/.test('' + statusCode)) {
-    throw new HttpError(statusCode, body.message);
+  if (!res.ok) {
+    throw new HttpError(res.status, body.message);
   }
 
   token.type = body.token_type;

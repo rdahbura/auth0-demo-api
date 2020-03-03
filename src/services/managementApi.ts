@@ -16,7 +16,7 @@ export async function createClient(client: object): Promise<string> {
 
   const url = new URL(`${AUTH0_MGT_API}/clients`);
 
-  const response = await fetch(url, {
+  const res = await fetch(url, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -25,11 +25,10 @@ export async function createClient(client: object): Promise<string> {
     body: JSON.stringify(client),
   });
 
-  const body = await response.json();
-  const statusCode = response.status;
+  const body = await res.json();
 
-  if (!/^2/.test('' + statusCode)) {
-    throw new HttpError(statusCode, body.message);
+  if (!res.ok) {
+    throw new HttpError(res.status, body.message);
   }
 
   return body;
@@ -49,17 +48,16 @@ export async function getClient(
   const url = new URL(`${AUTH0_MGT_API}/clients/${id}`);
   Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
 
-  const response = await fetch(url, {
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  const body = await response.json();
-  const statusCode = response.status;
+  const body = await res.json();
 
-  if (!/^2/.test('' + statusCode)) {
-    throw new HttpError(statusCode, body.message);
+  if (!res.ok) {
+    throw new HttpError(res.status, body.message);
   }
 
   return body;
@@ -75,17 +73,16 @@ export async function getClients(qs: IDictionary<string>): Promise<string> {
   const url = new URL(`${AUTH0_MGT_API}/clients`);
   Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
 
-  const response = await fetch(url, {
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  const body = await response.json();
-  const statusCode = response.status;
+  const body = await res.json();
 
-  if (!/^2/.test('' + statusCode)) {
-    throw new HttpError(statusCode, body.message);
+  if (!res.ok) {
+    throw new HttpError(res.status, body.message);
   }
 
   return body;
@@ -105,17 +102,16 @@ export async function getUser(
   const url = new URL(`${AUTH0_MGT_API}/users/${id}`);
   Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
 
-  const response = await fetch(url, {
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  const body = await response.json();
-  const statusCode = response.status;
+  const body = await res.json();
 
-  if (!/^2/.test('' + statusCode)) {
-    throw new HttpError(statusCode, body.message);
+  if (!res.ok) {
+    throw new HttpError(res.status, body.message);
   }
 
   return body;
@@ -131,17 +127,16 @@ export async function getUsers(qs: IDictionary<string>): Promise<string> {
   const url = new URL(`${AUTH0_MGT_API}/users`);
   Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
 
-  const response = await fetch(url, {
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  const body = await response.json();
-  const statusCode = response.status;
+  const body = await res.json();
 
-  if (!/^2/.test('' + statusCode)) {
-    throw new HttpError(statusCode, body.message);
+  if (!res.ok) {
+    throw new HttpError(res.status, body.message);
   }
 
   return body;
