@@ -46,7 +46,9 @@ export async function getClient(
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/clients/${id}`);
-  Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
+  Object.keys(qs).forEach((key) =>
+    url.searchParams.append(key, qs[key] as string)
+  );
 
   const res = await fetch(url, {
     method: 'GET',
@@ -72,7 +74,9 @@ export async function getClients(qs: IDictionary<string>): Promise<string> {
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/clients`);
-  Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
+  Object.keys(qs).forEach((key) =>
+    url.searchParams.append(key, qs[key] as string)
+  );
 
   const res = await fetch(url, {
     method: 'GET',
@@ -102,7 +106,9 @@ export async function getUser(
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/users/${id}`);
-  Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
+  Object.keys(qs).forEach((key) =>
+    url.searchParams.append(key, qs[key] as string)
+  );
 
   const res = await fetch(url, {
     method: 'GET',
@@ -128,7 +134,9 @@ export async function getUsers(qs: IDictionary<string>): Promise<string> {
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/users`);
-  Object.keys(qs).forEach((key) => url.searchParams.append(key, qs[key]));
+  Object.keys(qs).forEach((key) =>
+    url.searchParams.append(key, qs[key] as string)
+  );
 
   const res = await fetch(url, {
     method: 'GET',
