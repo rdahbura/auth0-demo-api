@@ -1,8 +1,8 @@
 import fetch from 'node-fetch';
+import { Query } from 'express-serve-static-core';
 
 import { AUTH0_DOMAIN } from '../utils/constants';
 import { HttpError } from '../types/http';
-import { IDictionary } from '../types/collections';
 import { getToken } from './authorizationApi';
 
 const AUTH0_MGT_API = `https://${AUTH0_DOMAIN}/api/v2`;
@@ -39,10 +39,7 @@ export async function createClient(client: object): Promise<string> {
  * @param id
  * @param qs
  */
-export async function getClient(
-  id: string,
-  qs: IDictionary<string>
-): Promise<string> {
+export async function getClient(id: string, qs: Query): Promise<string> {
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/clients/${id}`);
@@ -70,7 +67,7 @@ export async function getClient(
  * Retrieves a list of all client applications
  * @param qs
  */
-export async function getClients(qs: IDictionary<string>): Promise<string> {
+export async function getClients(qs: Query): Promise<string> {
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/clients`);
@@ -99,10 +96,7 @@ export async function getClients(qs: IDictionary<string>): Promise<string> {
  * @param id
  * @param qs
  */
-export async function getUser(
-  id: string,
-  qs: IDictionary<string>
-): Promise<string> {
+export async function getUser(id: string, qs: Query): Promise<string> {
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/users/${id}`);
@@ -130,7 +124,7 @@ export async function getUser(
  * Retrieves a list of all userss
  * @param qs
  */
-export async function getUsers(qs: IDictionary<string>): Promise<string> {
+export async function getUsers(qs: Query): Promise<string> {
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/users`);
