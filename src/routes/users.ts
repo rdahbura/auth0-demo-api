@@ -1,14 +1,17 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import jwtAuthz from 'express-jwt-authz';
 
 import { getUser, getUsers } from '../services/managementApi';
 
 const router = Router();
+const options = { customScopeKey: 'permissions' };
 
 /**
  * Retrieves a user by its id.
  */
 router.get(
   '/:id',
+  jwtAuthz(['read:users'], options),
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const resp = await getUser(req.params.id, req.query);
@@ -24,6 +27,7 @@ router.get(
  */
 router.get(
   '/',
+  jwtAuthz(['read:users'], options),
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const resp = await getUsers(req.query);
