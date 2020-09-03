@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "license": "MIT",
   "description": "Auth0 demo API.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rdahbura/auth0-demo-api.git"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
