@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import jwtAuthz from 'express-jwt-authz';
 
-import { getClient, getClients } from '../services/managementApi';
+import { getClient, getClients } from '../services/management';
 
 const router = Router();
 const options = { customScopeKey: 'permissions' };

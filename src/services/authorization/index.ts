@@ -1,13 +1,13 @@
 import fetch from 'node-fetch';
 
-import logger from '../utils/logger';
-import { HttpError, Token } from '../types/http';
+import logger from '../../utils/logger';
+import { HttpError, Token } from '../../types/http';
 import {
   AUTH0_DOMAIN,
   AUTH0_AUDIENCE_MGT_API,
   CLIENT_ID,
   CLIENT_SECRET,
-} from '../utils/constants';
+} from '../../utils/constants';
 
 const token = new Token();
 
