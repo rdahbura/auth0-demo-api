@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import jwtAuthz from 'express-jwt-authz';
 
-import { getUser, getUsers } from '../services/managementApi';
+import { enableMfa, getUser, getUsers } from '../services/managementApi';
 
 const router = Router();
 const options = { customScopeKey: 'permissions' };
@@ -31,6 +31,22 @@ router.get(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const resp = await getUsers(req.query);
+      res.json(resp);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+/**
+ * Enable / disable MFA
+ */
+router.patch(
+  '/:id/enable-mfa/:value',
+  jwtAuthz(['update:users'], options),
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const resp = await enableMfa(req.params.id, req.params.value);
       res.json(resp);
     } catch (err) {
       next(err);

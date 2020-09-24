@@ -11,7 +11,9 @@ const AUTH0_MGT_API = `https://${AUTH0_DOMAIN}/api/v2`;
  * Creates a new client application.
  * @param client
  */
-export async function createClient(client: object): Promise<string> {
+export async function createClient(
+  client: Record<string, unknown>
+): Promise<string> {
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/clients`);
@@ -23,6 +25,38 @@ export async function createClient(client: object): Promise<string> {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(client),
+  });
+
+  const body = await res.json();
+
+  if (!res.ok) {
+    throw new HttpError(res.status, body.message);
+  }
+
+  return body;
+}
+
+/**
+ * Updates MFA metadata field.
+ * @param id
+ * @param value
+ */
+export async function enableMfa(id: string, value: string): Promise<string> {
+  const token = (await getToken()).value;
+
+  const url = new URL(`${AUTH0_MGT_API}/users/${id}`);
+
+  const res = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      app_metadata: {
+        enableMfa: JSON.parse(value),
+      },
+    }),
   });
 
   const body = await res.json();
