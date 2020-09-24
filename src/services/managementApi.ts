@@ -27,45 +27,13 @@ export async function createClient(
     body: JSON.stringify(client),
   });
 
-  const body = await res.json();
+  const resJson = await res.json();
 
   if (!res.ok) {
-    throw new HttpError(res.status, body.message);
+    throw new HttpError(res.status, resJson.message);
   }
 
-  return body;
-}
-
-/**
- * Updates MFA metadata field.
- * @param id
- * @param value
- */
-export async function enableMfa(id: string, value: string): Promise<string> {
-  const token = (await getToken()).value;
-
-  const url = new URL(`${AUTH0_MGT_API}/users/${id}`);
-
-  const res = await fetch(url, {
-    method: 'PATCH',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      app_metadata: {
-        enableMfa: JSON.parse(value),
-      },
-    }),
-  });
-
-  const body = await res.json();
-
-  if (!res.ok) {
-    throw new HttpError(res.status, body.message);
-  }
-
-  return body;
+  return resJson;
 }
 
 /**
@@ -88,13 +56,13 @@ export async function getClient(id: string, qs: Query): Promise<string> {
     },
   });
 
-  const body = await res.json();
+  const resJson = await res.json();
 
   if (!res.ok) {
-    throw new HttpError(res.status, body.message);
+    throw new HttpError(res.status, resJson.message);
   }
 
-  return body;
+  return resJson;
 }
 
 /**
@@ -116,13 +84,13 @@ export async function getClients(qs: Query): Promise<string> {
     },
   });
 
-  const body = await res.json();
+  const resJson = await res.json();
 
   if (!res.ok) {
-    throw new HttpError(res.status, body.message);
+    throw new HttpError(res.status, resJson.message);
   }
 
-  return body;
+  return resJson;
 }
 
 /**
@@ -145,13 +113,13 @@ export async function getUser(id: string, qs: Query): Promise<string> {
     },
   });
 
-  const body = await res.json();
+  const resJson = await res.json();
 
   if (!res.ok) {
-    throw new HttpError(res.status, body.message);
+    throw new HttpError(res.status, resJson.message);
   }
 
-  return body;
+  return resJson;
 }
 
 /**
@@ -173,11 +141,42 @@ export async function getUsers(qs: Query): Promise<string> {
     },
   });
 
-  const body = await res.json();
+  const resJson = await res.json();
 
   if (!res.ok) {
-    throw new HttpError(res.status, body.message);
+    throw new HttpError(res.status, resJson.message);
   }
 
-  return body;
+  return resJson;
+}
+
+/**
+ * Updates a user.
+ * @param id
+ * @param body
+ */
+export async function updateUser(
+  id: string,
+  body: Record<string, unknown>
+): Promise<string> {
+  const token = (await getToken()).value;
+
+  const url = new URL(`${AUTH0_MGT_API}/users/${id}`);
+
+  const res = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+
+  const resJson = await res.json();
+
+  if (!res.ok) {
+    throw new HttpError(res.status, resJson.message);
+  }
+
+  return resJson;
 }

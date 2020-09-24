@@ -37,15 +37,15 @@ export async function getToken(): Promise<Token> {
     }),
   });
 
-  const body = await res.json();
+  const resJson = await res.json();
 
   if (!res.ok) {
-    throw new HttpError(res.status, body.message);
+    throw new HttpError(res.status, resJson.message);
   }
 
-  token.type = body.token_type;
-  token.value = body.access_token;
-  token.expiresIn = body.expires_in;
+  token.type = resJson.token_type;
+  token.value = resJson.access_token;
+  token.expiresIn = resJson.expires_in;
 
   return token;
 }
