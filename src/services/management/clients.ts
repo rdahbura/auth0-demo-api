@@ -37,14 +37,13 @@ export async function createClient(
 }
 
 /**
- * Retrieves a client by its id.
- * @param id
+ * Retrieves a list of all client applications
  * @param qs
  */
-export async function getClient(id: string, qs: Query): Promise<string> {
+export async function getClients(qs: Query): Promise<string> {
   const token = (await getToken()).value;
 
-  const url = new URL(`${AUTH0_MGT_API}/clients/${id}`);
+  const url = new URL(`${AUTH0_MGT_API}/clients`);
   Object.keys(qs).forEach((key) =>
     url.searchParams.append(key, qs[key] as string)
   );
@@ -66,13 +65,14 @@ export async function getClient(id: string, qs: Query): Promise<string> {
 }
 
 /**
- * Retrieves a list of all client applications
+ * Retrieves a client by its id.
+ * @param id
  * @param qs
  */
-export async function getClients(qs: Query): Promise<string> {
+export async function getClient(id: string, qs: Query): Promise<string> {
   const token = (await getToken()).value;
 
-  const url = new URL(`${AUTH0_MGT_API}/clients`);
+  const url = new URL(`${AUTH0_MGT_API}/clients/${id}`);
   Object.keys(qs).forEach((key) =>
     url.searchParams.append(key, qs[key] as string)
   );

@@ -8,14 +8,13 @@ import { getToken } from '../authorization';
 const AUTH0_MGT_API = `https://${AUTH0_DOMAIN}/api/v2`;
 
 /**
- * Retrieves a user by its id.
- * @param id
+ * Retrieves a list of all userss
  * @param qs
  */
-export async function getUser(id: string, qs: Query): Promise<string> {
+export async function getUsers(qs: Query): Promise<string> {
   const token = (await getToken()).value;
 
-  const url = new URL(`${AUTH0_MGT_API}/users/${id}`);
+  const url = new URL(`${AUTH0_MGT_API}/users`);
   Object.keys(qs).forEach((key) =>
     url.searchParams.append(key, qs[key] as string)
   );
@@ -37,13 +36,14 @@ export async function getUser(id: string, qs: Query): Promise<string> {
 }
 
 /**
- * Retrieves a list of all userss
+ * Retrieves a user by its id.
+ * @param id
  * @param qs
  */
-export async function getUsers(qs: Query): Promise<string> {
+export async function getUser(id: string, qs: Query): Promise<string> {
   const token = (await getToken()).value;
 
-  const url = new URL(`${AUTH0_MGT_API}/users`);
+  const url = new URL(`${AUTH0_MGT_API}/users/${id}`);
   Object.keys(qs).forEach((key) =>
     url.searchParams.append(key, qs[key] as string)
   );
