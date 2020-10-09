@@ -12,14 +12,14 @@ const MONGO_URI = `mongodb+srv://${MONGO_USR}:${MONGO_PWD}@${MONGO_CLUSTER}/${MO
 
 let cachedClient: mongodb.MongoClient;
 
-export async function close(): Promise<void> {
+const close = async (): Promise<void> => {
   logger.info('Closing MongoDB connections...');
   if (cachedClient?.isConnected()) {
     await cachedClient.close();
   }
-}
+};
 
-export async function connect(): Promise<mongodb.Db> {
+const connect = async (): Promise<mongodb.Db> => {
   if (cachedClient?.isConnected()) {
     return cachedClient.db();
   }
@@ -30,10 +30,10 @@ export async function connect(): Promise<mongodb.Db> {
   });
 
   return cachedClient.db();
-}
+};
 
-export function createObjectId(id: string): ObjectId {
+const createObjectId = (id: string): ObjectId => {
   return new mongodb.ObjectId(id);
-}
+};
 
-export { MONGO_URI };
+export { close, connect, createObjectId, MONGO_URI };

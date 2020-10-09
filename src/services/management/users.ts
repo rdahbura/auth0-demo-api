@@ -11,7 +11,7 @@ const AUTH0_MGT_API = `https://${AUTH0_DOMAIN}/api/v2`;
  * Retrieves a list of all userss
  * @param qs
  */
-export async function getUsers(qs: Query): Promise<string> {
+const getUsers = async (qs: Query): Promise<string> => {
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/users`);
@@ -33,14 +33,14 @@ export async function getUsers(qs: Query): Promise<string> {
   }
 
   return resJson;
-}
+};
 
 /**
  * Retrieves a user by its id.
  * @param id
  * @param qs
  */
-export async function getUser(id: string, qs: Query): Promise<string> {
+const getUser = async (id: string, qs: Query): Promise<string> => {
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/users/${id}`);
@@ -62,17 +62,17 @@ export async function getUser(id: string, qs: Query): Promise<string> {
   }
 
   return resJson;
-}
+};
 
 /**
  * Updates a user.
  * @param id
  * @param body
  */
-export async function updateUser(
+const updateUser = async (
   id: string,
   body: Record<string, unknown>
-): Promise<string> {
+): Promise<string> => {
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/users/${id}`);
@@ -93,4 +93,6 @@ export async function updateUser(
   }
 
   return resJson;
-}
+};
+
+export { getUser, getUsers, updateUser };

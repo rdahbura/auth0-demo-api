@@ -8,14 +8,16 @@ const pool = new Pool({
   ssl: true,
 });
 
-export async function close(): Promise<void> {
+const close = async (): Promise<void> => {
   logger.info('Closing PostgreSQL connections...');
   await pool.end();
-}
+};
 
-export async function query<T>(
+const query = <T>(
   text: string,
   values?: T[]
-): Promise<QueryResult<QueryResultRow>> {
+): Promise<QueryResult<QueryResultRow>> => {
   return pool.query(text, values);
-}
+};
+
+export { close, query };

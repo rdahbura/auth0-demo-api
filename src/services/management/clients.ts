@@ -11,9 +11,9 @@ const AUTH0_MGT_API = `https://${AUTH0_DOMAIN}/api/v2`;
  * Creates a new client application.
  * @param client
  */
-export async function createClient(
+const createClient = async (
   client: Record<string, unknown>
-): Promise<string> {
+): Promise<string> => {
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/clients`);
@@ -34,13 +34,13 @@ export async function createClient(
   }
 
   return resJson;
-}
+};
 
 /**
  * Retrieves a list of all client applications
  * @param qs
  */
-export async function getClients(qs: Query): Promise<string> {
+const getClients = async (qs: Query): Promise<string> => {
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/clients`);
@@ -62,14 +62,14 @@ export async function getClients(qs: Query): Promise<string> {
   }
 
   return resJson;
-}
+};
 
 /**
  * Retrieves a client by its id.
  * @param id
  * @param qs
  */
-export async function getClient(id: string, qs: Query): Promise<string> {
+const getClient = async (id: string, qs: Query): Promise<string> => {
   const token = (await getToken()).value;
 
   const url = new URL(`${AUTH0_MGT_API}/clients/${id}`);
@@ -91,4 +91,6 @@ export async function getClient(id: string, qs: Query): Promise<string> {
   }
 
   return resJson;
-}
+};
+
+export { createClient, getClient, getClients };

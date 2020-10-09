@@ -14,7 +14,7 @@ const token = new Token();
 /**
  * Request a token by using client credentials grant.
  */
-export async function getToken(): Promise<Token> {
+const getToken = async (): Promise<Token> => {
   if (token.isValid()) {
     logger.info('Returning existing token...');
     return token;
@@ -48,4 +48,6 @@ export async function getToken(): Promise<Token> {
   token.expiresIn = resJson.expires_in;
 
   return token;
-}
+};
+
+export { getToken };

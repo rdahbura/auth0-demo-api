@@ -1,6 +1,6 @@
 import { STATUS_CODES } from 'http';
 
-export class HttpError extends Error {
+class HttpError extends Error {
   status: number;
   errors: object[] | undefined;
 
@@ -13,7 +13,7 @@ export class HttpError extends Error {
   }
 }
 
-export class Token {
+class Token {
   type: string;
   value: string;
   private _expiresAt: number;
@@ -37,3 +37,5 @@ export class Token {
 
   isValid = (): boolean => Date.now() < this._expiresAt;
 }
+
+export { HttpError, Token };
