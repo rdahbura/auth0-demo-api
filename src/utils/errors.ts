@@ -3,35 +3,37 @@ import { NextFunction, Request, Response } from 'express';
 import logger from './logger';
 import { HttpError } from '../types/http';
 
-export function error(
+const error = (
   err: HttpError,
   req: Request,
   res: Response,
   next: NextFunction
-): void {
+): void => {
   const status = err.status ?? 500;
   const error = Object.assign({ message: err.message }, err);
 
   res.status(status);
   res.json(error);
-}
+};
 
-export function errorLogger(
+const errorLogger = (
   err: HttpError,
   req: Request,
   res: Response,
   next: NextFunction
-): void {
+): void => {
   const error = Object.assign({ message: err.message }, err);
   logger.error(error);
 
   next(err);
-}
+};
 
-export function routeNotFound(
+const routeNotFound = (
   req: Request,
   res: Response,
   next: NextFunction
-): void {
+): void => {
   next(new HttpError(404));
-}
+};
+
+export { error, errorLogger, routeNotFound };

@@ -3,7 +3,7 @@ import { body, param, validationResult } from 'express-validator';
 
 import * as mongo from '../db/mongodb';
 import { HttpError } from '../types/http';
-import { compare, hash } from '../utils/security';
+import { hashCompare, hash } from '../utils/security';
 
 const router = Router();
 
@@ -59,12 +59,7 @@ router.patch(
  */
 router.patch(
   '/users/:email/password',
-  [
-    param('email').isEmail(),
-    body('password')
-      .not()
-      .isEmpty(),
-  ],
+  [param('email').isEmail(), body('password').not().isEmpty()],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const errors = validationResult(req);
@@ -105,12 +100,7 @@ router.patch(
  */
 router.post(
   '/users',
-  [
-    body('email').isEmail(),
-    body('password')
-      .not()
-      .isEmpty(),
-  ],
+  [body('email').isEmail(), body('password').not().isEmpty()],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const errors = validationResult(req);
@@ -209,12 +199,7 @@ router.get(
  */
 router.post(
   '/users/:email/login',
-  [
-    param('email').isEmail(),
-    body('password')
-      .not()
-      .isEmpty(),
-  ],
+  [param('email').isEmail(), body('password').not().isEmpty()],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const errors = validationResult(req);
@@ -236,7 +221,7 @@ router.post(
         return next(error);
       }
 
-      const isValidPassword = await compare(password, dbUser.password);
+      const isValidPassword = await hashCompare(password, dbUser.password);
 
       if (!isValidPassword) {
         const msg = 'Invalid username and/or password.';
