@@ -3,6 +3,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import * as pg from '../db/postgresql';
 
 import clientsRouter from './clients';
+import connectionsRouter from './connections';
 import databaseRouter from './databases';
 import usersRouter from './users';
 
@@ -29,6 +30,7 @@ router.get(
 );
 
 router.use('/clients', clientsRouter);
+router.use('/connections', connectionsRouter);
 router.use('/databases', databaseRouter);
 router.use('/users', usersRouter);
 
