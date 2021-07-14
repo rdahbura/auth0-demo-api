@@ -14,20 +14,17 @@ let cachedClient: mongodb.MongoClient;
 
 const close = async (): Promise<void> => {
   logger.info('Closing MongoDB connections...');
-  if (cachedClient?.isConnected()) {
+  if (cachedClient) {
     await cachedClient.close();
   }
 };
 
 const connect = async (): Promise<mongodb.Db> => {
-  if (cachedClient?.isConnected()) {
+  if (cachedClient) {
     return cachedClient.db();
   }
 
-  cachedClient = await mongodb.MongoClient.connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  cachedClient = await mongodb.MongoClient.connect(MONGO_URI);
 
   return cachedClient.db();
 };
