@@ -35,12 +35,12 @@ router.patch(
         .findOneAndUpdate(
           { email: email },
           { $set: { email: newEmail, email_verified: verified } },
-          { returnOriginal: false }
+          { returnDocument: 'after' }
         );
 
       if (
-        dbUser.value.email !== newEmail &&
-        dbUser.value.email_verified !== verified
+        dbUser.value?.email !== newEmail &&
+        dbUser.value?.email_verified !== verified
       ) {
         const msg = "Unable to update user's email.";
         const error = new HttpError(500, msg);
@@ -79,10 +79,10 @@ router.patch(
         .findOneAndUpdate(
           { email: email },
           { $set: { password: passwordHash } },
-          { returnOriginal: false }
+          { returnDocument: 'after' }
         );
 
-      if (dbUser.value.password !== passwordHash) {
+      if (dbUser.value?.password !== passwordHash) {
         const msg = 'Unable to change password.';
         const error = new HttpError(500, msg);
         return next(error);
@@ -117,7 +117,7 @@ router.post(
       const db = await mongo.connect();
       const dbUser = await db.collection('users').insertOne(body);
 
-      if (dbUser.insertedCount !== 1) {
+      if (!dbUser.acknowledged) {
         const msg = 'Unable to create user.';
         const error = new HttpError(500, msg);
         return next(error);
@@ -261,10 +261,10 @@ router.patch(
         .findOneAndUpdate(
           { email: email },
           { $set: { email_verified: true } },
-          { returnOriginal: false }
+          { returnDocument: 'after' }
         );
 
-      if (dbUser.value.email_verified !== true) {
+      if (dbUser.value?.email_verified !== true) {
         const msg = 'Unable to verify user.';
         const error = new HttpError(500, msg);
         return next(error);
